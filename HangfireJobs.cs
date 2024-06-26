@@ -2,9 +2,20 @@
 {
     public class HangfireJobs
     {
-        public async Task ExecuteRecurringJobAsync(Task recurringJob)
+        public static Func<Task> handleEmailMessages;
+
+        public static Func<Task> deleteOldEmailMessages;
+
+        public async Task HandleEmailMessages()
         {
-            await recurringJob;
+            if (handleEmailMessages != null)
+                await handleEmailMessages();
+        }
+
+        public async Task DeleteOldEmailMessages()
+        {
+            if (deleteOldEmailMessages != null)
+                await deleteOldEmailMessages();
         }
     }
 }
