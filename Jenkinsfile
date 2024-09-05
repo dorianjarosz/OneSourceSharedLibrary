@@ -4,7 +4,6 @@ import com.cloudbees.groovy.cps.NonCPS
 
 @NonCPS
 def updateVersion(String jobName){
-    echo "Entering Version"
     def jenkins = Jenkins.getInstance()
     String versionType = "minor"
     def job = jenkins.getItemByFullName(jobName)
@@ -14,7 +13,6 @@ def updateVersion(String jobName){
     if (paramsDef) {
        paramsDef.parameterDefinitions.each{
            if("version".equals(it.name)){
-               echo "Current version is ${it.defaultValue}"
                 def splitVersion = it.defaultValue.split('\\.')
                 int minorVar = splitVersion[1]
                 if ( minorVar > 8){
@@ -26,7 +24,6 @@ def updateVersion(String jobName){
                 }
 
                it.defaultValue = getUpdatedVersion(versionType, it.defaultValue)
-               echo "Next version is ${it.defaultValue}"
            
            }
        }
@@ -61,21 +58,18 @@ pipeline {
       
         stage('Creating Package') {
             steps {
-                sh 'dotnet build'
-		echo "Building project"
-                sh 'dotnet pack "${WORKSPACE}/OneSourceSharedLibrary/OneSourceSharedLibrary.csproj"'
+                bat 'dotnet build'
+                bat 'dotnet pack "${WORKSPACE}/OneSourceSharedLibrary/OneSourceSharedLibrary.csproj"'
 		echo "Packed"
             }
         }
         stage('Push Package'){
             steps{
-                echo "Pushing package to Baget Server : http://localhost:5000/"
-                sh 'dotnet nuget push "${WORKSPACE}/OneSourceSharedLibrary/bin/Debug/OneSourceSharedLibrary.${version}.nupkg" -k 12345 -s  http://localhost:5000/v3/index.json  --skip-duplicate'
+                bat 'dotnet nuget push "${WORKSPACE}/OneSourceSharedLibrary/bin/Debug/OneSourceSharedLibrary.${version}.nupkg" -k 12345 -s  http://localhost:5000/v3/index.json  --skip-duplicate'
             }
         }
         stage('Update Version'){
             steps{
-                echo "Updating version"
                 updateVersion("${JOB_NAME}")
                 cleanWs()
 
