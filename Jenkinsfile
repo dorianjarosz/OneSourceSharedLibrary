@@ -59,13 +59,13 @@ pipeline {
         stage('Creating Package') {
             steps {
                 bat 'dotnet build'
-                bat 'dotnet pack "${WORKSPACE}/OneSourceSharedLibrary/OneSourceSharedLibrary.csproj"'
+                bat 'dotnet pack "${WORKSPACE}/OneSourceSharedLibrary.csproj"'
 		echo "Packed"
             }
         }
         stage('Push Package'){
             steps{
-                bat 'dotnet nuget push "${WORKSPACE}/OneSourceSharedLibrary/bin/Debug/OneSourceSharedLibrary.${version}.nupkg" -k 12345 -s  http://localhost:5000/v3/index.json  --skip-duplicate'
+                bat 'dotnet nuget push "${WORKSPACE}/bin/Debug/OneSourceSharedLibrary.${version}.nupkg" -k 12345 -s  http://localhost:5000/v3/index.json  --skip-duplicate'
             }
         }
         stage('Update Version'){
