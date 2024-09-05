@@ -63,14 +63,14 @@ pipeline {
             steps {
                 sh 'dotnet build'
 		echo "Building project"
-                sh 'dotnet pack "${WORKSPACE}/XYZAPIAutomation/XYZAPIAutomation.csproj"'
+                sh 'dotnet pack "${WORKSPACE}/OneSourceSharedLibrary/OneSourceSharedLibrary.csproj"'
 		echo "Packed"
             }
         }
         stage('Push Package'){
             steps{
                 echo "Pushing package to Baget Server : http://localhost:5000/"
-                sh 'dotnet nuget push "${WORKSPACE}/XYZAPIAutomation/bin/Debug/XYZAPIAutomation.${version}.nupkg" -k 12345 -s  http://localhost:5000/v3/index.json  --skip-duplicate'
+                sh 'dotnet nuget push "${WORKSPACE}/OneSourceSharedLibrary/bin/Debug/OneSourceSharedLibrary.${version}.nupkg" -k 12345 -s  http://localhost:5000/v3/index.json  --skip-duplicate'
             }
         }
         stage('Update Version'){
