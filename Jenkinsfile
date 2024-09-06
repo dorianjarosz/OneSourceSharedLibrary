@@ -65,7 +65,7 @@ pipeline {
         }
         stage('Push Package'){
             steps{
-                bat 'dotnet nuget push "bin/Debug/OneSourceSharedLibrary.${version}.nupkg" -k 12345 -s  http://localhost:5000/v3/index.json  --skip-duplicate'
+                bat 'dotnet nuget push "bin/Debug/OneSourceSharedLibrary.%version%.nupkg" -k 12345 -s  http://localhost:5000/v3/index.json  --skip-duplicate'
             }
         }
         stage('Update Version'){
