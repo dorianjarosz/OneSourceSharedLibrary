@@ -7,7 +7,6 @@
     <Title>OneSource Shared Library</Title>
     <PackageProjectUrl></PackageProjectUrl>
     <RepositoryUrl>https://github.com/dorianjarosz/OneSourceSharedLibrary</RepositoryUrl>
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
   </PropertyGroup>
 
 </Project>
