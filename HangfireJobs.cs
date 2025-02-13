@@ -1,4 +1,6 @@
-﻿namespace OneSourceSharedLibrary
+﻿using Hangfire;
+
+namespace OneSourceSharedLibrary
 {
     public class HangfireJobs
     {
@@ -20,6 +22,7 @@
                 await deleteOldEmailMessages();
         }
 
+        [Queue("onesource_task_scheduler_queue")]
         public async Task RunScheduledTask(int taskId, int scheduleId)
         {
             if (runScheduledTask != null)
