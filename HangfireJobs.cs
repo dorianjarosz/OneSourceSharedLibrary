@@ -1,14 +1,10 @@
-﻿using Hangfire;
-
-namespace OneSourceSharedLibrary
+﻿namespace OneSourceSharedLibrary
 {
     public class HangfireJobs
     {
         public static Func<Task> handleEmailMessages;
 
         public static Func<Task> deleteOldEmailMessages;
-
-        public static Func<int,int,Task> runScheduledTask;
 
         public async Task HandleEmailMessages()
         {
@@ -20,13 +16,6 @@ namespace OneSourceSharedLibrary
         {
             if (deleteOldEmailMessages != null)
                 await deleteOldEmailMessages();
-        }
-
-        [Queue("onesource_task_scheduler_queue")]
-        public async Task RunScheduledTask(int taskId, int scheduleId)
-        {
-            if (runScheduledTask != null)
-                await runScheduledTask(taskId, scheduleId);
         }
     }
 }
